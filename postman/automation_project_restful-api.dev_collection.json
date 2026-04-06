@@ -72,12 +72,8 @@
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/objects",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects"]
         }
       },
       "response": []
@@ -149,12 +145,8 @@
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/objects?id=7",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects"
-          ],
+          "host": ["{{baseUrl}}"],
+          "path": ["objects"],
           "query": [
             {
               "key": "id",
@@ -253,12 +245,8 @@
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/objects?id=7&id=3&id=10",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects"
-          ],
+          "host": ["{{baseUrl}}"],
+          "path": ["objects"],
           "query": [
             {
               "key": "id",
@@ -371,13 +359,8 @@
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/objects/{{id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects",
-            "{{id}}"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects", "{{id}}"]
         }
       },
       "response": []
@@ -417,13 +400,8 @@
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/objects/{{id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects",
-            "{{id}}"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects", "{{id}}"]
         }
       },
       "response": []
@@ -524,12 +502,8 @@
         },
         "url": {
           "raw": "{{baseUrl}}/objects",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects"]
         }
       },
       "response": []
@@ -582,12 +556,8 @@
         },
         "url": {
           "raw": "{{baseUrl}}/objects",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects"]
         }
       },
       "response": []
@@ -688,13 +658,8 @@
         },
         "url": {
           "raw": "{{baseUrl}}/objects/{{id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects",
-            "{{id}}"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects", "{{id}}"]
         }
       },
       "response": []
@@ -747,13 +712,8 @@
         },
         "url": {
           "raw": "{{baseUrl}}/objects/{{id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects",
-            "{{id}}"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects", "{{id}}"]
         }
       },
       "response": []
@@ -805,13 +765,8 @@
         },
         "url": {
           "raw": "{{baseUrl}}/objects/{{id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects",
-            "{{id}}"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects", "{{id}}"]
         }
       },
       "response": []
@@ -863,13 +818,8 @@
         },
         "url": {
           "raw": "{{baseUrl}}/objects/{{id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects",
-            "{{id}}"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects", "{{id}}"]
         }
       },
       "response": []
@@ -907,13 +857,8 @@
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/objects/{{id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects",
-            "{{id}}"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects", "{{id}}"]
         }
       },
       "response": []
@@ -950,13 +895,8 @@
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/objects/{{id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects",
-            "{{id}}"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects", "{{id}}"]
         }
       },
       "response": []
@@ -994,13 +934,8 @@
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/objects/{{id}}",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "objects",
-            "{{id}}"
-          ]
+          "host": ["{{baseUrl}}"],
+          "path": ["objects", "{{id}}"]
         }
       },
       "response": []
@@ -1013,9 +948,7 @@
         "type": "text/javascript",
         "packages": {},
         "requests": {},
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     },
     {
@@ -1024,36 +957,34 @@
         "type": "text/javascript",
         "packages": {},
         "requests": {},
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ],
   "variable": [
     {
       "key": "id",
-      "value": ""
+      "value": "9"
     },
     {
       "key": "expectedPrice",
-      "value": ""
+      "value": "2499.99"
     },
     {
       "key": "expectedRamMemory",
-      "value": ""
+      "value": "16 GB"
     },
     {
       "key": "isCollectionRun",
-      "value": ""
+      "value": "true"
     },
     {
       "key": "isPutNext",
-      "value": ""
+      "value": "false"
     },
     {
       "key": "isDeleteNext",
-      "value": ""
+      "value": "false"
     }
   ]
 }
