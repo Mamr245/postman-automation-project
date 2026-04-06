@@ -1,0 +1,1059 @@
+{
+  "info": {
+    "_postman_id": "26acceda-51f1-4cba-81b7-456ef7302f71",
+    "name": "Automation Project - restful-api.dev",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30655122"
+  },
+  "item": [
+    {
+      "name": "Get Item List",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "const schema = \r",
+              "{\r",
+              "  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+              "  \"title\": \"DeviceListSchema\",\r",
+              "  \"type\": \"array\",\r",
+              "  \"items\": {\r",
+              "    \"type\": \"object\",\r",
+              "    \"required\": [\"id\", \"name\", \"data\"],\r",
+              "    \"properties\": {\r",
+              "      \"id\": {\r",
+              "        \"type\": \"string\",\r",
+              "        \"description\": \"Unique identifier\"\r",
+              "      },\r",
+              "      \"name\": {\r",
+              "        \"type\": \"string\",\r",
+              "        \"description\": \"Device name\"\r",
+              "      },\r",
+              "      \"data\": {\r",
+              "        \"description\": \"Additional device attributes\",\r",
+              "        \"type\": [\"object\", \"null\"],\r",
+              "        \"additionalProperties\": {\r",
+              "          \"oneOf\": [\r",
+              "            { \"type\": \"string\" },\r",
+              "            { \"type\": \"number\" },\r",
+              "            { \"type\": \"boolean\" }\r",
+              "          ]\r",
+              "        }\r",
+              "      }\r",
+              "    },\r",
+              "    \"additionalProperties\": false\r",
+              "  }\r",
+              "};\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 200`, function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Schema is valid`, function () {\r",
+              "    pm.expect(jsonResponseData).to.have.jsonSchema(schema);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Response contains 13 items`, function () {\r",
+              "    pm.expect(jsonResponseData.length).to.eql(13);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/objects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Item List - Query single ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "const schema = \r",
+              "{\r",
+              "  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+              "  \"title\": \"DeviceListSchema\",\r",
+              "  \"type\": \"array\",\r",
+              "  \"items\": {\r",
+              "    \"type\": \"object\",\r",
+              "    \"required\": [\"id\", \"name\", \"data\"],\r",
+              "    \"properties\": {\r",
+              "      \"id\": {\r",
+              "        \"type\": \"string\",\r",
+              "        \"description\": \"Unique identifier\"\r",
+              "      },\r",
+              "      \"name\": {\r",
+              "        \"type\": \"string\",\r",
+              "        \"description\": \"Device name\"\r",
+              "      },\r",
+              "      \"data\": {\r",
+              "        \"description\": \"Additional device attributes\",\r",
+              "        \"type\": [\"object\", \"null\"],\r",
+              "        \"additionalProperties\": {\r",
+              "          \"oneOf\": [\r",
+              "            { \"type\": \"string\" },\r",
+              "            { \"type\": \"number\" },\r",
+              "            { \"type\": \"boolean\" }\r",
+              "          ]\r",
+              "        }\r",
+              "      }\r",
+              "    },\r",
+              "    \"additionalProperties\": false\r",
+              "  }\r",
+              "};\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 200`, function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Schema is valid`, function () {\r",
+              "    pm.expect(pm.response.json()).to.have.jsonSchema(schema);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Returned data is correct`, function () {\r",
+              "    pm.expect(jsonResponseData[0].id).to.eql(\"7\");\r",
+              "    pm.expect(jsonResponseData[0].name).to.eql(\"Apple MacBook Pro 16\");\r",
+              "    pm.expect(jsonResponseData[0].data[\"CPU model\"]).to.eql(\"Intel Core i9\");\r",
+              "    pm.expect(jsonResponseData[0].data[\"Hard disk size\"]).to.eql(\"1 TB\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/objects?id=7",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "7"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Item List - Query several IDs",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "const schema = \r",
+              "{\r",
+              "  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+              "  \"title\": \"DeviceListSchema\",\r",
+              "  \"type\": \"array\",\r",
+              "  \"items\": {\r",
+              "    \"type\": \"object\",\r",
+              "    \"required\": [\"id\", \"name\", \"data\"],\r",
+              "    \"properties\": {\r",
+              "      \"id\": {\r",
+              "        \"type\": \"string\",\r",
+              "        \"description\": \"Unique identifier\"\r",
+              "      },\r",
+              "      \"name\": {\r",
+              "        \"type\": \"string\",\r",
+              "        \"description\": \"Device name\"\r",
+              "      },\r",
+              "      \"data\": {\r",
+              "        \"description\": \"Additional device attributes\",\r",
+              "        \"type\": [\"object\", \"null\"],\r",
+              "        \"additionalProperties\": {\r",
+              "          \"oneOf\": [\r",
+              "            { \"type\": \"string\" },\r",
+              "            { \"type\": \"number\" },\r",
+              "            { \"type\": \"boolean\" }\r",
+              "          ]\r",
+              "        }\r",
+              "      }\r",
+              "    },\r",
+              "    \"additionalProperties\": false\r",
+              "  }\r",
+              "};\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 200`, function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Schema is valid`, function () {\r",
+              "    pm.expect(pm.response.json()).to.have.jsonSchema(schema);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Returned data is correct - 1st item`, function () {\r",
+              "    pm.expect(jsonResponseData[0].id).to.eql(\"7\");\r",
+              "    pm.expect(jsonResponseData[0].name).to.eql(\"Apple MacBook Pro 16\");\r",
+              "    pm.expect(jsonResponseData[0].data[\"CPU model\"]).to.eql(\"Intel Core i9\");\r",
+              "    pm.expect(jsonResponseData[0].data[\"Hard disk size\"]).to.eql(\"1 TB\");\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Returned data is correct - 2nd item`, function () {\r",
+              "    pm.expect(jsonResponseData[1].id).to.eql(\"3\");\r",
+              "    pm.expect(jsonResponseData[1].name).to.eql(\"Apple iPhone 12 Pro Max\");\r",
+              "    pm.expect(jsonResponseData[1].data.color).to.eql(\"Cloudy White\");\r",
+              "    pm.expect(jsonResponseData[1].data[\"capacity GB\"]).to.eql(512);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Returned data is correct - 3rd item`, function () {\r",
+              "    pm.expect(jsonResponseData[2].id).to.eql(\"10\");\r",
+              "    pm.expect(jsonResponseData[2].name).to.eql(\"Apple iPad Mini 5th Gen\");\r",
+              "    pm.expect(jsonResponseData[2].data[\"Capacity\"]).to.eql(\"64 GB\");\r",
+              "    pm.expect(jsonResponseData[2].data[\"Screen size\"]).to.eql(7.9);\r",
+              "});\r",
+              "\r",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {\r",
+              "    pm.collectionVariables.set(\"id\", \"9999\");\r",
+              "    pm.execution.setNextRequest(\"Get Item - Item does not exist\");\r",
+              "}\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/objects?id=7&id=3&id=10",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "7"
+            },
+            {
+              "key": "id",
+              "value": "3"
+            },
+            {
+              "key": "id",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Item",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "const schema = \r",
+              "{\r",
+              "  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\r",
+              "  \"title\": \"DeviceSchema\",\r",
+              "  \"type\": \"object\",\r",
+              "  \"required\": [\"id\", \"name\", \"data\"],\r",
+              "  \"properties\": {\r",
+              "    \"id\": {\r",
+              "      \"type\": \"string\",\r",
+              "      \"description\": \"Unique identifier of the device\"\r",
+              "    },\r",
+              "    \"name\": {\r",
+              "      \"type\": \"string\",\r",
+              "      \"description\": \"Device name\"\r",
+              "    },\r",
+              "    \"data\": {\r",
+              "      \"type\": \"object\",\r",
+              "      \"description\": \"Additional attributes of the device\",\r",
+              "      \"additionalProperties\": {\r",
+              "        \"oneOf\": [\r",
+              "          { \"type\": \"string\" },\r",
+              "          { \"type\": \"number\" },\r",
+              "          { \"type\": \"boolean\" }\r",
+              "        ]\r",
+              "      }\r",
+              "    }\r",
+              "  },\r",
+              "  \"additionalProperties\": false\r",
+              "};\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 200`, function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Schema is valid`, function () {\r",
+              "    pm.expect(pm.response.json()).to.have.jsonSchema(schema);\r",
+              "});\r",
+              "\r",
+              "if (pm.collectionVariables.get(\"id\") === \"9\") {\r",
+              "    pm.test(`${pm.info.requestName}: Returned data is correct`, function () {\r",
+              "        pm.expect(jsonResponseData.id).to.eql(\"9\");\r",
+              "        pm.expect(jsonResponseData.name).to.eql(\"Beats Studio3 Wireless\");\r",
+              "        pm.expect(jsonResponseData.data[\"Color\"]).to.eql(\"Red\");\r",
+              "        pm.expect(jsonResponseData.data[\"Description\"]).to.eql(\"High-performance wireless noise cancelling headphones\");\r",
+              "    });\r",
+              "} else {\r",
+              "    pm.test(`${pm.info.requestName}: Returned data is correct`, function () {\r",
+              "        pm.expect(jsonResponseData.id).to.eql(pm.collectionVariables.get(\"id\"));\r",
+              "        pm.expect(jsonResponseData.name).to.eql(\"ASUS ROG STRIX G614JI-93A47CB1\");  \r",
+              "        pm.expect(jsonResponseData.data.year).to.eql(2023);\r",
+              "        pm.expect(jsonResponseData.data.price).to.eql(parseFloat(pm.collectionVariables.get(\"expectedPrice\")));\r",
+              "        pm.expect(jsonResponseData.data[\"CPU model\"]).to.eql(\"Intel Core i9\");\r",
+              "        pm.expect(jsonResponseData.data[\"Hard disk size\"]).to.eql(\"1 TB\");\r",
+              "        pm.expect(jsonResponseData.data[\"Graphics card\"]).to.eql(\"NVIDIA GeForce RTX 4070\");\r",
+              "        pm.expect(jsonResponseData.data[\"RAM memory\"]).to.eql(pm.collectionVariables.get(\"expectedRamMemory\"));\r",
+              "    });\r",
+              "}\r",
+              "\r",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\" && pm.collectionVariables.get(\"id\")  === \"9\" ) {\r",
+              "    pm.execution.setNextRequest(\"Put Item - Put unallowed\");\r",
+              "} else if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\" \r",
+              "&& pm.collectionVariables.get(\"isPutNext\").toLowerCase() === \"true\") {\r",
+              "    pm.collectionVariables.set(\"expectedPrice\", \"2999.99\");  \r",
+              "    pm.collectionVariables.set(\"expectedRamMemory\", \"32 GB\");  \r",
+              "    pm.execution.setNextRequest(\"Put Item\");\r",
+              "} else if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\" \r",
+              "&& pm.collectionVariables.get(\"isDeleteNext\").toLowerCase() === \"true\") {\r",
+              "    pm.collectionVariables.set(\"expectedPrice\", \"2499.99\");  \r",
+              "    pm.collectionVariables.set(\"expectedRamMemory\", \"16 GB\"); \r",
+              "    pm.execution.setNextRequest(\"Delete Item\");\r",
+              "}\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/objects/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Item - Item does not exist",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 404`, function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Error message is correct`, function () {\r",
+              "    pm.expect(jsonResponseData.error).to.eql(`Object with id=${pm.collectionVariables.get(\"id\")} was not found.`);\r",
+              "});\r",
+              "\r",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\" && pm.collectionVariables.get(\"id\") === \"9999\") {\r",
+              "    pm.execution.setNextRequest(\"Put Item - Item does not exist\");\r",
+              "} else {\r",
+              "    pm.execution.setNextRequest(null);\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/objects/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post Item",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    ",
+              "const schema = ",
+              "{",
+              "  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+              "  \"type\": \"object\",",
+              "  \"properties\": {",
+              "    \"id\": {",
+              "      \"type\": \"string\"",
+              "    },",
+              "    \"name\": {",
+              "      \"type\": \"string\"",
+              "    },",
+              "    \"createdAt\": {",
+              "      \"type\": \"integer\"",
+              "    },",
+              "    \"data\": {",
+              "      \"type\": \"object\",",
+              "      \"properties\": {",
+              "        \"year\": {",
+              "          \"type\": \"integer\"",
+              "        },",
+              "        \"price\": {",
+              "          \"type\": \"number\"",
+              "        },",
+              "        \"CPU model\": {",
+              "          \"type\": \"string\"",
+              "        },",
+              "        \"Hard disk size\": {",
+              "          \"type\": \"string\"",
+              "        }",
+              "      },",
+              "      \"additionalProperties\": true",
+              "    }",
+              "  },",
+              "  \"required\": [\"id\", \"name\", \"createdAt\", \"data\"]",
+              "};",
+              "",
+              "pm.test(`${pm.info.requestName}: Status code is 200`, function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(`${pm.info.requestName}: Schema is valid`, function () {",
+              "    pm.expect(pm.response.json()).to.have.jsonSchema(schema);",
+              "});",
+              "",
+              "pm.test(`${pm.info.requestName}: Returned data is correct`, function () {",
+              "    pm.expect(jsonResponseData.id).to.be.a('string');",
+              "    pm.expect(jsonResponseData.name).to.eql(\"ASUS ROG STRIX G614JI-93A47CB1\");",
+              "    pm.expect(Math.abs(jsonResponseData.createdAt - Date.now())).to.be.at.most(10000);",
+              "    pm.expect(jsonResponseData.data.year).to.eql(2023);",
+              "    pm.expect(jsonResponseData.data.price).to.eql(2499.99);",
+              "    pm.expect(jsonResponseData.data[\"CPU model\"]).to.eql(\"Intel Core i9\");",
+              "    pm.expect(jsonResponseData.data[\"Hard disk size\"]).to.eql(\"1 TB\");",
+              "    pm.expect(jsonResponseData.data[\"Graphics card\"]).to.eql(\"NVIDIA GeForce RTX 4070\");",
+              "    pm.expect(jsonResponseData.data[\"RAM memory\"]).to.eql(\"16 GB\");",
+              "});",
+              "",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {",
+              "    pm.collectionVariables.set(\"id\", jsonResponseData.id);",
+              "    pm.collectionVariables.set(\"isPutNext\", \"true\");  ",
+              "    pm.execution.setNextRequest(\"Get Item\");",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"ASUS ROG STRIX G614JI-93A47CB1\",\r\n  \"data\": {\r\n    \"year\": 2023,\r\n    \"price\": 2499.99,\r\n    \"CPU model\": \"Intel Core i9\",\r\n    \"Hard disk size\": \"1 TB\",\r\n    \"Graphics card\": \"NVIDIA GeForce RTX 4070\",\r\n    \"RAM memory\": \"16 GB\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/objects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post Item - Empty Body",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 400`, function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Error message is correct`, function () {\r",
+              "    pm.expect(jsonResponseData.error).to.eql(\"400 Bad Request. If you are trying to create or update the data, potential issue is that you are sending incorrect body json or it is missing at all.\");\r",
+              "});\r",
+              "\r",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {\r",
+              "    pm.execution.setNextRequest(\"Put Item - Empty Body\");\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/objects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Put Item",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    ",
+              "const schema = ",
+              "{",
+              "  \"$schema\": \"http://json-schema.org/draft-07/schema#\",",
+              "  \"type\": \"object\",",
+              "  \"properties\": {",
+              "    \"id\": {",
+              "      \"type\": \"string\"",
+              "    },",
+              "    \"name\": {",
+              "      \"type\": \"string\"",
+              "    },",
+              "    \"updatedAt\": {",
+              "      \"type\": \"integer\"",
+              "    },",
+              "    \"data\": {",
+              "      \"type\": \"object\",",
+              "      \"properties\": {",
+              "        \"year\": {",
+              "          \"type\": \"integer\"",
+              "        },",
+              "        \"price\": {",
+              "          \"type\": \"number\"",
+              "        },",
+              "        \"CPU model\": {",
+              "          \"type\": \"string\"",
+              "        },",
+              "        \"Hard disk size\": {",
+              "          \"type\": \"string\"",
+              "        }",
+              "      },",
+              "      \"additionalProperties\": true",
+              "    }",
+              "  },",
+              "  \"required\": [\"id\", \"name\", \"updatedAt\", \"data\"]",
+              "};",
+              "",
+              "pm.test(`${pm.info.requestName}: Status code is 200`, function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(`${pm.info.requestName}: Schema is valid`, function () {",
+              "    pm.expect(pm.response.json()).to.have.jsonSchema(schema);",
+              "});",
+              "",
+              "pm.test(`${pm.info.requestName}: Returned data is correct`, function () {",
+              "    pm.expect(jsonResponseData.name).to.eql(\"ASUS ROG STRIX G614JI-93A47CB1\");  ",
+              "    pm.expect(jsonResponseData.id).to.eql(pm.collectionVariables.get(\"id\"));",
+              "    pm.expect(Math.abs(jsonResponseData.updatedAt - Date.now())).to.be.at.most(10000);",
+              "    pm.expect(jsonResponseData.data.year).to.eql(2023);",
+              "    pm.expect(jsonResponseData.data.price).to.eql(2999.99);",
+              "    pm.expect(jsonResponseData.data[\"CPU model\"]).to.eql(\"Intel Core i9\");",
+              "    pm.expect(jsonResponseData.data[\"Hard disk size\"]).to.eql(\"1 TB\");",
+              "    pm.expect(jsonResponseData.data[\"Graphics card\"]).to.eql(\"NVIDIA GeForce RTX 4070\");",
+              "    pm.expect(jsonResponseData.data[\"RAM memory\"]).to.eql(\"32 GB\");",
+              "});",
+              "",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {",
+              "    pm.collectionVariables.set(\"isPutNext\", \"false\");",
+              "    pm.collectionVariables.set(\"isDeleteNext\", \"true\");  ",
+              "    pm.execution.setNextRequest(\"Get Item\");",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"ASUS ROG STRIX G614JI-93A47CB1\",\r\n  \"data\": {\r\n    \"year\": 2023,\r\n    \"price\": 2999.99,\r\n    \"CPU model\": \"Intel Core i9\",\r\n    \"Hard disk size\": \"1 TB\",\r\n    \"Graphics card\": \"NVIDIA GeForce RTX 4070\",\r\n    \"RAM memory\": \"32 GB\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/objects/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Put Item - Empty Body",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 400`, function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Error message is correct`, function () {\r",
+              "    pm.expect(jsonResponseData.error).to.eql(\"400 Bad Request. If you are trying to create or update the data, potential issue is that you are sending incorrect body json or it is missing at all.\");\r",
+              "});\r",
+              "\r",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {\r",
+              "    pm.collectionVariables.set(\"id\", \"9\");\r",
+              "    pm.execution.setNextRequest(\"Get Item\");\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/objects/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Put Item - Item does not exist",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    ",
+              "",
+              "pm.test(`${pm.info.requestName}: Status code is 404`, function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test(`${pm.info.requestName}: Error message is correct`, function () {",
+              "    pm.expect(jsonResponseData.error).to.eql(`The Object with id = ${pm.collectionVariables.get(\"id\")} doesn't exist. Please provide an object id which exists or generate a new Object using POST request and capture the id of it to use it as part of PUT request after that.`);",
+              "});",
+              "",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {",
+              "    pm.execution.setNextRequest(\"Delete Item - Item does not exist\");",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Beats Studio3 Wireless\",\r\n    \"data\": {\r\n        \"Color\": \"Blue\",\r\n        \"Description\": \"High-performance wireless noise cancelling headphones\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/objects/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Put Item - Put unallowed",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    ",
+              "",
+              "pm.test(`${pm.info.requestName}: Status code is 405`, function () {",
+              "    pm.response.to.have.status(405);",
+              "});",
+              "",
+              "pm.test(`${pm.info.requestName}: Error message is correct`, function () {",
+              "    pm.expect(jsonResponseData.error).to.eql(`${pm.collectionVariables.get(\"id\")} is a reserved id and the data object of it cannot be overridden. You can create a new object via POST request and use new generated by id from it to send a PUT request.`);",
+              "});",
+              "",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {",
+              "    pm.execution.setNextRequest(\"Delete Item - Deletion unallowed\");",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Beats Studio3 Wireless\",\r\n    \"data\": {\r\n        \"Color\": \"Blue\",\r\n        \"Description\": \"High-performance wireless noise cancelling headphones\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/objects/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Item",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 200`, function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Returned message is correct`, function () {\r",
+              "    pm.expect(jsonResponseData.message).to.eql(`Object with id = ${pm.collectionVariables.get(\"id\")} has been deleted.`);\r",
+              "});\r",
+              "\r",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {\r",
+              "    pm.collectionVariables.set(\"isDeleteNext\", \"false\");\r",
+              "    pm.execution.setNextRequest(\"Get Item - Item does not exist\");\r",
+              "};"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/objects/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Item - Item does not exist",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 404`, function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Error message is correct`, function () {\r",
+              "    pm.expect(jsonResponseData.error).to.eql(`Object with id = ${pm.collectionVariables.get(\"id\")} doesn't exist.`);\r",
+              "});\r",
+              "\r",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {\r",
+              "    pm.execution.setNextRequest(\"Post Item - Empty Body\");\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/objects/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Item - Deletion unallowed",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonResponseData = pm.response.json();    \r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Status code is 405`, function () {\r",
+              "    pm.response.to.have.status(405);\r",
+              "});\r",
+              "\r",
+              "pm.test(`${pm.info.requestName}: Error message is correct`, function () {\r",
+              "    pm.expect(jsonResponseData.error).to.eql(`${pm.collectionVariables.get(\"id\")} is a reserved id and the data object of it cannot be deleted. You can create your own new object via POST request and try to send a DELETE request with new generated object id.`);\r",
+              "});\r",
+              "\r",
+              "if (pm.collectionVariables.get(\"isCollectionRun\").toLowerCase() === \"true\") {\r",
+              "    pm.execution.setNextRequest(\"Post Item\");\r",
+              "}\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/objects/{{id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "objects",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "id",
+      "value": ""
+    },
+    {
+      "key": "expectedPrice",
+      "value": ""
+    },
+    {
+      "key": "expectedRamMemory",
+      "value": ""
+    },
+    {
+      "key": "isCollectionRun",
+      "value": ""
+    },
+    {
+      "key": "isPutNext",
+      "value": ""
+    },
+    {
+      "key": "isDeleteNext",
+      "value": ""
+    }
+  ]
+}
